@@ -36,17 +36,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v6
         with:
-          go-version: stable
-          check-latest: true
-
-      - name: Basic integrity checks
-        run: |
-          go vet ./...
-          out="$(go list -m -retracted -f '{{if .Retracted}}{{.Path}} is retracted{{end}}' all)"
-          if [ -n "$out" ]; then
-            printf '%s\n' "$out"
-            exit 1
-          fi
+          go-version-file: "go.mod"
 
       - name: Run GoReleaser
         id: goreleaser
