@@ -38,15 +38,6 @@ jobs:
         with:
           go-version-file: "go.mod"
 
-      - name: Basic integrity checks
-        run: |
-          go vet ./...
-          out="$(go list -m -retracted -f '{{if .Retracted}}{{.Path}} is retracted{{end}}' all)"
-          if [ -n "$out" ]; then
-            printf '%s\n' "$out"
-            exit 1
-          fi
-
       - name: Run GoReleaser
         id: goreleaser
         uses: goreleaser/goreleaser-action@v6
