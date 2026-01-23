@@ -82,6 +82,11 @@ jobs:
           misspell -error -locale US .
           misspell -error -locale US ./nk
           staticcheck ./...
+          out="$(go list -m -retracted -f '{{if .Retracted}}{{.Path}} is retracted{{end}}' all)"
+          if [ -n "$out" ]; then
+            printf '%s\n' "$out"
+            exit 1
+          fi
 
       - name: Run Basic Tests
         id: tests
